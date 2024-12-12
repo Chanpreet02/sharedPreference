@@ -1,0 +1,5 @@
+/* const api_Key ="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"; */
+
+// const api_Key = "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";
+
+const api_Key = "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";
