@@ -47,90 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
 */
 
 
-
-import 'package:flutter/material.dart';
-import 'package:response/views/chatscreen.dart';
-import 'package:response/views/home_page.dart';
-import 'package:response/views/mediapicker.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Page'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Center(
-            child:
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ChatScreen()),
-                );
-              },
-              child: Text('Go to Chat'),
-            ),
-          ),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => homepage()),
-                );
-              },
-              child: Text('Go to Mic'),
-            ),
-          ),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => filePicker()),
-                );
-              },
-              child: Text('Go to Mic'),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-
-
-
-
 /*
 import 'package:flutter/material.dart';
 import 'chat.dart';
@@ -202,3 +118,138 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }*/
+
+
+
+
+
+import 'package:flutter/material.dart';
+import 'package:response/functionalities/apimodel.dart';
+import 'package:response/functionalities/workman.dart';
+import 'package:response/functionalities/workmanag.dart';
+import 'package:response/views/chatscreen.dart';
+import 'package:response/views/customWidget.dart';
+import 'package:response/views/home_page.dart';
+import 'package:response/views/message.dart';
+import 'package:response/views/record.dart';
+import 'package:response/views/rtlTemplate.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  initializeWorkManager();
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    final mod = ApiModel(apiEndpoint: "https://jsonplaceholder.typicode.com/posts", name: "Example");
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home Page'),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Center(
+              child:
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ChatScreen()),
+                  );
+                },
+                child: Text('Go to Chat'),
+              ),
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => homepage()),
+                  );
+                },
+                child: Text('Go to Mic'),
+              ),
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Text('Go to Mic'),
+              ),
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MessageScreen()),
+                  );
+                },
+                child: Text('Go to Message'),
+              ),
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RTLTemplate(
+                        apiModel: mod,
+                        widget: MyCustomWidget(title: "API Data", content: "content........"))),
+                  );
+                },
+                child: Text('Go to API Fetch'),
+              ),
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BackgroundManager()),
+                  );
+                },
+                child: Text('Go to shared preference'),
+              ),
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => workBack()),
+                  );
+                },
+                child: Text('Go to workManage'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
